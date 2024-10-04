@@ -120,7 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,6 +162,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Flight\Index.cshtml" />
+    <Content Include="Views\Flight\Create.cshtml" />
+    <Content Include="Views\Flight\Delete.cshtml" />
+    <Content Include="Views\Flight\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -179,6 +183,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FlightBoard.Business\FlightBoard.Business.csproj">
+      <Project>{6F44DBBE-2FBF-4013-B5C2-4D872E72AEF3}</Project>
+      <Name>FlightBoard.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FlightBoard.Models\FlightBoard.Models.csproj">
+      <Project>{48022101-40CF-48B1-B16C-BD0794A07CF5}</Project>
+      <Name>FlightBoard.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

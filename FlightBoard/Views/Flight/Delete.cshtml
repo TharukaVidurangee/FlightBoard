@@ -1,0 +1,96 @@
+﻿@model FlightBoard.Models.FlightInfo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FlightInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FlightNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FlightNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledDep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledDep)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduledArr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduledArr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BoardingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BoardingTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GateNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GateNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

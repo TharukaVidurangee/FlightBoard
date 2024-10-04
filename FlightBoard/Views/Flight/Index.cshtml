@@ -1,0 +1,46 @@
+﻿@model List<FlightBoard.Models.FlightInfo>
+
+@{
+    ViewBag.Title = "Flight Information";
+}
+
+<h2>Flight Information</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Flight Date</th>
+            <th>Flight Number</th>
+            <th>Destination</th>
+            <th>Scheduled Departure</th>
+            <th>Scheduled Arrival</th>
+            <th>Boarding Time</th>
+            <th>Gate No</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var flight in Model)
+        {
+            <tr>
+                <td>@flight.FlightDate.ToString("dd-MM-yyyy")</td>
+                <td>@flight.FlightNumber</td>
+                <td>@flight.Destination</td>
+                <td>@flight.ScheduledDep</td>
+                <td>@flight.ScheduledArr</td>
+                <td>@flight.BoardingTime</td>
+                <td>@flight.GateNo</td>
+                <td>@flight.Status</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = flight.FlightId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = flight.FlightId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Create New Flight", "Create")
+</p>
