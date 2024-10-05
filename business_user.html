@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Information</title>
+
+  <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000635;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      background-color: #000635;
+      padding: 15px;
+      text-align: left;
+      position: relative;
+    }
+    .header h1 {
+      font-size: 5rem;
+      font-weight:600;
+      color: #FFEC00;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .header img {
+      vertical-align: middle;
+      margin-right: 50px;
+    }
+    .clock {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  text-align: right;
+}
+.clock .time {
+  font-size: 3rem; 
+  font-weight: bold;
+  color: #FFEC00;
+  margin-top: 10px;
+  margin-bottom: -15px;
+}
+.clock .date {
+  font-size: 1.5rem; 
+  font-weight: bold;
+  color: #FFEC00;
+}
+
+    .flight-table {
+      border-collapse: collapse;
+    }
+    .flight-table th {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      color: #FFEC00;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: none;
+    }
+
+    .flight-table td {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #fff;
+      border: none;
+    }
+
+    .flight-table tr:nth-child(odd) td {
+      background-color: #1f244e; 
+    }
+
+    .flight-table tr:nth-child(even) td {
+      background-color: #000635; 
+    }
+    .flight-table td {
+      color: #fff;
+    }
+    .flight-table th:first-child,
+    .flight-table th:last-child {
+      text-align: left;
+    }
+
+
+
+    .flight-table td:first-child,
+    .flight-table td:last-child{
+        text-align: left;
+    }
+
+    
+    .flight-table td:nth-last-child(2) {
+      padding-right: 40px; 
+    }
+    
+    .flight-table th:nth-last-child(2) {
+      padding-right: 40px; 
+    }
+    
+    .flight-table th:first-child,
+.flight-table td:first-child {
+  padding-left: 15px;
+}
+    .status-checkin {
+      color: #77F961 !important; 
+      
+    }
+    .status-gateopen {
+      color: #DD9120 !important; 
+    }
+    .status-gateclosed {
+      color: #9A9A9A !important; 
+    }
+    .status-finalcall {
+      color: #FF5454 !important; 
+    }
+     
+     @media (max-width: 992px) {
+      .header h1 {
+        font-size: 4rem;
+      }
+      .header img {
+        width: 80px; 
+      }
+      .clock .time {
+        font-size: 2.5rem;
+      }
+      .clock .date {
+        font-size: 1.2rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 1.1rem;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      .header img {
+        width: 60px; 
+      }
+      .clock .time {
+        font-size: 2rem;
+      }
+      .clock .date {
+        font-size: 1rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 0.9rem;
+        padding: 5px;
+      }
+      .flight-table {
+        width: 100%; 
+      }
+    }
+
+    
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="airplane-icon.svg" alt="Airplane" width="100" class="d-inline">
+    <h1 class="d-inline">Flight Information</h1>
+    <div class="clock d-grid">
+        <span id="clock-time" class="time">00:00</span>
+        <span id="clock-date" class="date">2024-01-01</span>
+      </div>
+      
+    
+  </div>
+
+  <div class="table-container">
+    <table class="table table-hover flight-table text-light">
+      <thead>
+        <tr>
+          <th>FLIGHT DATE</th>
+          <th>FLIGHT</th>
+          <th>DESTINATION</th>
+          <th>SCHED DEP</th>
+          <th>SCHED ARR</th>
+          <th>BOARDING TIME</th>
+          <th>GATE NO</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-checkin">CHECK IN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateopen">GATE OPEN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateclosed">GATE CLOSED</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-finalcall">FINAL CALL</td>
+        </tr>
+
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-checkin">CHECK IN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateopen">GATE OPEN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateclosed">GATE CLOSED</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-finalcall">FINAL CALL</td>
+        </tr>
+
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-checkin">CHECK IN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateopen">GATE OPEN</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-gateclosed">GATE CLOSED</td>
+        </tr>
+        <tr>
+          <td>01-01-2024</td>
+          <td>UL225</td>
+          <td>CMB-DOH</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>00:00</td>
+          <td>GATE 01</td>
+          <td class="status-finalcall">FINAL CALL</td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+
+  <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateClock() {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0'); 
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const year = now.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  document.getElementById('clock-date').textContent = formattedDate;
+  const time = now.toTimeString().substr(0, 5);
+  document.getElementById('clock-time').textContent = time;
+}
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

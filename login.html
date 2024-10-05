@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Information Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('login-background.png');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            height: 80vh;
+            margin: 0;
+            align-items: center;
+            padding-left: 80px;
+            padding-right: 150px; 
+        }
+
+        .flight-info {
+            color: #FFEC00;
+            font-size: 60px;
+            margin-top: auto;
+          
+        }
+
+        .flight-info h1{
+            padding: 20;
+            margin:0;
+        }
+        
+
+        .flight-info img {
+            width: 200px;
+           
+            display: block;
+            margin-bottom: auto;
+            margin-right: auto;
+       
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 35px;
+            width: 500px;
+            height: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 4px solid rgba(146, 144, 144, 0.529);
+            margin-left: 100px; 
+            margin-top: 150px;
+        }
+       
+
+        .login-box h2 {
+            color: #ffffff;
+            margin-bottom: 50px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-container img {
+            position: absolute;
+            left: 10px;
+            color: #878787;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+        }
+
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
+            width: 300px;
+            font-size: 20px;
+            font-weight: 500;
+            padding: 10px 10px 10px 60px; 
+            border: none;
+            background-color: #d3d2db;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(134, 125, 125, 0.1);
+            outline: none;
+        }
+
+        .login-box img {
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        @media (max-width: 992px) {
+            .header h1 {
+                font-size: 4rem;
+            }
+
+            .header img {
+                width: 80px;
+            }
+
+            .clock .time {
+                font-size: 2.5rem;
+            }
+
+            .clock .date {
+                font-size: 1.2rem;
+            }
+
+            .flight-table th, .flight-table td {
+                font-size: 1.1rem;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header img {
+                width: 60px;
+            }
+
+            .clock .time {
+                font-size: 2rem;
+            }
+
+            .clock .date {
+                font-size: 1rem;
+            }
+
+            .flight-table th, .flight-table td {
+                font-size: 0.9rem;
+                padding: 5px;
+            }
+
+            .flight-table {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flight-info">
+            <img src="airplane-icon-login.svg" alt="Flight Icon">
+            <h1>Flight Information</h1>
+        </div>
+        <div class="login-box">
+            <h2>Login Here</h2>
+
+            <div class="input-container">
+                <img src="account.svg" alt="Username Icon">
+                <input type="text" placeholder="Username">
+            </div>
+
+            <div class="input-container">
+                <img src="password.svg" alt="Password Icon">
+                <input type="password" placeholder="Password">
+            </div>
+
+            <img src="logo.png" alt="SriLankan Airlines Logo" width="230px">
+        </div>
+    </div>
+</body>
+</html>

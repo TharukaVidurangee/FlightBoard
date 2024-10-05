@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Information</title>
+
+  <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000635;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      background-color: #000635;
+      padding: 15px;
+      text-align: left;
+      position: relative;
+    }
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: #FFEC00;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .header img {
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+    .clock-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      text-align: right;
+      display: flex;
+      align-items: center;
+    }
+    .clock {
+      text-align: right;
+      margin-right: 10px;
+      line-height: 1.2;
+    }
+    .clock .time {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #FFEC00;
+      margin-right: 10px;
+    }
+    .clock .date {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #FFEC00;
+      margin-right: 10px;
+    }
+    .add-info-btn {
+      background-color: #fff;
+      color: #000635;
+      font-size: 1.2rem;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 20px;
+    }
+    .add-info-btn:hover {
+      background-color: #7789c1;
+    }
+    .flight-table {
+      border-collapse: collapse;
+    }
+    .flight-table th {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      color: #FFEC00;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: none;
+    }
+    .flight-table td {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #fff;
+      border: none;
+    }
+    .flight-table tr:nth-child(odd) td {
+      background-color: #1f244e;
+    }
+    .flight-table tr:nth-child(even) td {
+      background-color: #000635;
+    }
+    .flight-table td {
+      color: #fff;
+    }
+
+    .flight-table th:nth-last-child(2),
+    .flight-table td:nth-last-child(2) {
+      text-align: left; 
+    }
+    .flight-table th:first-child,
+    .flight-table th:last-child {
+      text-align: left;
+    }
+    .flight-table td:first-child,
+    .flight-table td:last-child {
+      text-align: left;
+    }
+    .flight-table td:nth-last-child(2) {
+      padding-right: 20px;
+      padding-left: 35px;
+    }
+    .flight-table th:nth-last-child(2) {
+      padding-right: 20px;
+      padding-left: 35px;
+    }
+
+    .flight-table th:first-child,
+    .flight-table td:first-child {
+      padding-left: 15px;
+    }
+    .status-checkin {
+      color: #77F961 !important;
+    }
+    .status-gateopen {
+      color: #DD9120 !important;
+    }
+    .status-gateclosed {
+      color: #9A9A9A !important;
+    }
+    .status-finalcall {
+      color: #FF5454 !important;
+    }
+    .action-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .action-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (max-width: 992px) {
+      .header h1 {
+        font-size: 4rem;
+      }
+      .header img {
+        width: 80px; 
+      }
+      .clock .time {
+        font-size: 2.5rem;
+      }
+      .clock .date {
+        font-size: 1.2rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 1.1rem;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      .header img {
+        width: 60px; 
+      }
+      .clock .time {
+        font-size: 2rem;
+      }
+      .clock .date {
+        font-size: 1rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 0.9rem;
+        padding: 5px;
+      }
+      .flight-table {
+        width: 100%; 
+      }
+    }
+    .modal-content {
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  width: 500px;
+  max-width: 100%;
+  color: #000000;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.form-row > div {
+  flex: 1;
+}
+
+input[type="time"],
+select,
+input[type="text"] {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  color: #a8a4a4;
+  transition: border-color 0.2s;
+}
+
+input[type="time"]:focus,
+select:focus,
+input[type="text"]:focus {
+  outline: none;
+  border-color: #000000;
+}
+
+input[type="time"]::placeholder,
+input[type="text"]::placeholder {
+  color: #000000;
+}
+
+
+.form-row:last-child {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form-row:first-child > div {
+  margin-left: 70px; 
+}
+
+.form-row:first-child > div:last-child {
+  margin-right: 0; 
+}
+
+.form-row:first-child > div {
+  margin-right: 0px;
+  margin-left: 70px;
+  white-space: nowrap; 
+}
+
+.form-row:first-child > div:first-child {
+  margin-left: 0; 
+}
+
+
+#saveBtn {
+  background-color: #000635;
+  border-color: #0056b3;
+  color: #fff;
+  margin-top: 22px;
+  padding: 10px 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 0.9;
+  margin-right: auto; 
+}
+
+#saveBtn:hover {
+  background-color: #2222a3f0;
+  border-color: #004085;
+}
+
+
+.close {
+
+  color: #696666;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+.close:hover {
+  color: #000000;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #000000;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.container {
+  display: grid;
+  padding: 0%;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+ 
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="airplane-icon.svg" alt="Airplane" width="50" class="d-inline">
+    <h1 class="d-inline">Flight Information</h1>
+    <div class="clock-container">
+      <div class="clock">
+        <span id="clock-time" class="time">00:00</span><br>
+        <span id="clock-date" class="date">2024-01-01</span>
+      </div>
+      <button onclick="addInfo()" class="btn btn-primary add-info-btn">+ Add Info</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-hover flight-table text-light">
+      <thead>
+        <tr>
+          <th>FLIGHT DATE</th>
+          <th>FLIGHT</th>
+          <th>DESTINATION</th>
+          <th>SCHED DEP</th>
+          <th>SCHED ARR</th>
+          <th>BOARDING TIME</th>
+          <th>GATE NO</th>
+          <th>STATUS</th>
+          <th>ACTION</th> 
+        </tr>
+      </thead>
+      <tbody id="flight-table-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Add Info Modal -->
+<div id="addInfoModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>Search Flight</h2>
+      <span class="close" onclick="closeAddInfoModal()">&times;</span>
+    </div>
+    <hr>
+    <div style="margin-top: 10px;">
+      <div style="display: flex; align-items:self-end;"> <!-- Changed from center to flex-start -->
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="flight-date">Flight Date:</label>
+          <input type="date" id="flight-date" required style="width: 100%; padding: 10px; border: 1px solid #000; border-radius: 4px; color: #a8a4a4; height: 40px;">
+        </div>
+        <div style="flex: 1; margin-right: 10px;">
+          <label for="flight-no">Flight No:</label>
+          <select id="flight-no" style="width: 100%; padding: 10px; border: 1px solid #000; border-radius: 4px; height: 40px;">
+            <option value="UL0255">UL0255</option>
+            <option value="UL0256">UL0256</option>
+            <option value="UL0257">UL0257</option>
+            <!-- Add more flight options as needed -->
+          </select>
+        </div>
+        <button class="btn btn-success" onclick="getFlightData()" style="background-color: #000635; font-weight: bold; color: white; padding: 10px 15px; border: none; border-radius: 4px; height: 40px; margin-top: 8px;">Get Data</button> <!-- Added margin-top -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div id="editModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Update Flight Information</h2>
+        <span class="close" onclick="closeModal()">&times;</span>
+      </div>
+  
+      <!-- Line above Flight information -->
+      <hr>
+  
+      <div class="container">
+        <!-- Row 1: Flight Date, Flight No, and Destination -->
+        <div class="form-row" style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <div style="flex: 1; margin-right: 10px;">
+            <label>Flight Date:</label>
+            <span id="modal-flight-date"></span>
+          </div>
+          <div style="flex: 1; ">
+            <label>Flight No:</label>
+            <span id="modal-flight-no"></span>
+          </div>
+          <div style="flex: 1;">
+            <label>Destination:</label>
+            <span id="modal-destination"></span>
+          </div>
+        </div>
+      </div>
+        
+        
+  
+        <!-- Row 2: Scheduled Departure and Scheduled Arrival -->
+        <div class="form-row" style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <div style="flex: 1; margin-right: 10px;">
+            <label>Scheduled Departure:</label>
+            <span id="modal-departure"></span>
+          </div>
+          <div style="flex: 1;">
+            <label>Scheduled Arrival:</label>
+            <span id="modal-arrival"></span>
+          </div>
+        </div>
+  
+        <!-- Row 3: Boarding Time and Gate No -->
+        <div class="form-row" style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <div style="flex: 1; margin-right: 10px;">
+            <label>Boarding Time:</label>
+        <div style="display: flex;">
+            <select id="modal-boarding-hour">
+                <!-- Generate hour options -->
+                <script>
+                    for (let i = 0; i < 24; i++) {
+                        const hour = String(i).padStart(2, '0'); // Format hours with leading zero
+                        document.write(`<option value="${hour}">${hour}</option>`);
+                    }
+                </script>
+            </select>
+            :
+            <select id="modal-boarding-minute">
+                <!-- Generate minute options -->
+                <script>
+                    for (let i = 0; i < 60; i += 1) { // Options in increments of 5 minutes
+                        const minute = String(i).padStart(2, '0'); // Format minutes with leading zero
+                        document.write(`<option value="${minute}">${minute}</option>`);
+                    }
+                </script>
+            </select>
+        </div>
+    </div>
+          <div style="flex: 1;">
+            <label>Gate No:</label>
+            <select id="modal-gate">
+              <option value="GATE 01">GATE 01</option>
+              <option value="GATE 02">GATE 02</option>
+              <option value="GATE 03">GATE 03</option>
+              <option value="GATE 04">GATE 04</option>
+              <option value="GATE 05">GATE 05</option>
+              <option value="GATE 06">GATE 06</option>
+              <option value="GATE 07">GATE 07</option>
+              <option value="GATE 08">GATE 08</option>
+              <option value="GATE 09">GATE 09</option>
+              <option value="GATE 10">GATE 10</option>
+              <option value="GATE 11">GATE 11</option>
+              <option value="GATE 12">GATE 12</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Row 4: Status and Save Info -->
+        <div class="form-row" style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <div style="flex: 1; margin-right: 10px;">
+            <label>Status:</label>
+            <select id="modal-status">
+              <option value="CHECK IN">CHECK IN</option>
+              <option value="GATE OPEN">GATE OPEN</option>
+              <option value="GATE CLOSED">GATE CLOSED</option>
+              <option value="FINAL CALL">FINAL CALL</option>
+            </select>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: flex-end ;">
+            <button id="saveBtn" class="btn btn-success" onclick="saveChanges()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <script>
+    const flightData = [
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "10:00",
+        gate: "GATE 01",
+        status: "CHECK IN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "12:20",
+        gate: "GATE 02",
+        status: "GATE OPEN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "13:18",
+        gate: "GATE 01",
+        status: "GATE CLOSED"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "14:50",
+        gate: "GATE 02",
+        status: "FINAL CALL"
+      },
+
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "17:30",
+        gate: "GATE 01",
+        status: "CHECK IN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "18:06",
+        gate: "GATE 02",
+        status: "GATE OPEN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "19:00",
+        boardingTime: "20:58",
+        gate: "GATE 01",
+        status: "GATE CLOSED"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "",
+        gate: "GATE 02",
+        status: "FINAL CALL"
+      },
+
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "",
+        gate: "GATE 01",
+        status: "CHECK IN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "",
+        gate: "GATE 02",
+        status: "GATE OPEN"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "",
+        gate: "GATE 01",
+        status: "GATE CLOSED"
+      },
+      {
+        date: "01-01-2024",
+        flight: "UL0255",
+        destination: "DOH",
+        scheduledDeparture: "00:00",
+        scheduledArrival: "00:00",
+        boardingTime: "",
+        gate: "GATE 02",
+        status: "FINAL CALL"
+      },
+      
+      
+    ];
+
+    function displayFlights() {
+      const tableBody = document.getElementById('flight-table-body');
+      tableBody.innerHTML = ''; // Clear existing rows
+      flightData.forEach((flight, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${flight.date}</td>
+          <td>${flight.flight}</td>
+          <td>${flight.destination}</td>
+          <td>${flight.scheduledDeparture}</td>
+          <td>${flight.scheduledArrival}</td>
+          <td>${flight.boardingTime}</td>
+          <td>${flight.gate}</td>
+          <td class="status-${flight.status.toLowerCase().replace(' ', '')}">${flight.status}</td>
+          <td>
+            <button class="action-btn" onclick="openModal(${index})"><img src="edit-icon.svg" alt="Edit"></button>
+            <button class="action-btn" onclick="deleteFlight(${index})"><img src="delete-icon.svg" alt="Delete"></button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function addInfo() {
+  // Display the Add Info Modal
+  document.getElementById('addInfoModal').style.display = 'block';
+}
+
+function closeAddInfoModal() {
+  // Close the Add Info Modal
+  document.getElementById('addInfoModal').style.display = 'none';
+}
+
+
+    function openModal(index) {
+    const flight = flightData[index];
+    document.getElementById('modal-flight-date').innerText = flight.date;
+    document.getElementById('modal-flight-no').innerText = flight.flight;
+    document.getElementById('modal-destination').innerText = flight.destination;
+    document.getElementById('modal-departure').innerText = flight.scheduledDeparture;
+    document.getElementById('modal-arrival').innerText = flight.scheduledArrival;
+
+    // Split the boarding time into hour and minute
+    const [hour, minute] = (flight.boardingTime || "00:00").split(':');
+    document.getElementById('modal-boarding-hour').value = hour;
+    document.getElementById('modal-boarding-minute').value = minute;
+
+    document.getElementById('modal-gate').value = flight.gate;
+    document.getElementById('modal-status').value = flight.status;
+    document.getElementById('editModal').style.display = "block";
+    document.getElementById('saveBtn').setAttribute('data-index', index);
+}
+
+
+    function closeModal() {
+      document.getElementById('editModal').style.display = "none";
+    }
+
+    function saveChanges() {
+    const index = document.getElementById('saveBtn').getAttribute('data-index');
+    const hour = document.getElementById('modal-boarding-hour').value;
+    const minute = document.getElementById('modal-boarding-minute').value;
+    
+    // Combine hour and minute into a time string
+    flightData[index].boardingTime = `${hour}:${minute}`;
+    flightData[index].gate = document.getElementById('modal-gate').value;
+    flightData[index].status = document.getElementById('modal-status').value;
+    
+    closeModal();
+    displayFlights(); 
+}
+
+
+    function deleteFlight(index) {
+      flightData.splice(index, 1);
+      displayFlights(); 
+    }
+
+    function updateClock() {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0'); 
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const year = now.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  document.getElementById('clock-date').textContent = formattedDate;
+  const time = now.toTimeString().substr(0, 5);
+  document.getElementById('clock-time').textContent = time;
+}
+    setInterval(updateClock, 1000);
+    displayFlights(); 
+  </script>
+</body>
+</html>
