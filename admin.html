@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Information</title>
+
+  <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #000635;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .header {
+      background-color: #000635;
+      padding: 15px;
+      text-align: left;
+      position: relative;
+    }
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: #FFEC00;
+      display: inline-block;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+    .header img {
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+    .clock-container {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      text-align: right;
+      display: flex;
+      align-items: center;
+    }
+    .clock {
+      text-align: right;
+      margin-right: 10px;
+      line-height: 1.2;
+    }
+    .clock .time {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #FFEC00;
+      margin-right: 10px;
+   
+    }
+    .clock .date {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #FFEC00;
+      margin-right: 10px;
+    }
+    .add-info-btn {
+      background-color: #fff;
+      color: #000635;
+      font-size: 1.2rem;
+      padding: 15px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-left: 20px;
+    }
+    .add-info-btn:hover {
+      background-color: #7789c1;
+    }
+   
+    .flight-table {
+      
+      border-collapse: collapse;
+    }
+    .flight-table th {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      color: #FFEC00;
+      font-weight: bold;
+      font-size: 1.3rem;
+      border: none;
+    }
+    .flight-table td {
+      text-align: center;
+      vertical-align: middle;
+      background-color: #000635;
+      font-weight: bold;
+      font-size: 1.3rem;
+      color: #fff;
+      border: none;
+    }
+    .flight-table tr:nth-child(odd) td {
+      background-color: #1f244e;
+    }
+    .flight-table tr:nth-child(even) td {
+      background-color: #000635;
+    }
+    .flight-table td {
+      color: #fff;
+    }
+
+    .flight-table th:nth-last-child(2),
+.flight-table td:nth-last-child(2) {
+  text-align: left; 
+}
+    .flight-table th:first-child,
+    .flight-table th:last-child {
+      text-align: left;
+    }
+    .flight-table td:first-child,
+    .flight-table td:last-child {
+      text-align: left;
+    }
+    .flight-table td:nth-last-child(2) {
+      padding-right: 20px;
+      padding-left: 35px;
+    }
+    .flight-table th:nth-last-child(2) {
+      padding-right: 20px;
+      padding-left: 35px;
+    }
+
+    .flight-table th:first-child,
+.flight-table td:first-child {
+  padding-left: 15px;
+}
+    .status-checkin {
+      color: #77F961 !important;
+    }
+    .status-gateopen {
+      color: #DD9120 !important;
+    }
+    .status-gateclosed {
+      color: #9A9A9A !important;
+    }
+    .status-finalcall {
+      color: #FF5454 !important;
+    }
+    .action-btn {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .action-btn img {
+      width: 24px;
+      height: 24px;
+    }
+
+    
+     @media (max-width: 992px) {
+      .header h1 {
+        font-size: 4rem;
+      }
+      .header img {
+        width: 80px; 
+      }
+      .clock .time {
+        font-size: 2.5rem;
+      }
+      .clock .date {
+        font-size: 1.2rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 1.1rem;
+        padding: 8px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      .header img {
+        width: 60px; 
+      }
+      .clock .time {
+        font-size: 2rem;
+      }
+      .clock .date {
+        font-size: 1rem;
+      }
+      .flight-table th, .flight-table td {
+        font-size: 0.9rem;
+        padding: 5px;
+      }
+      .flight-table {
+        width: 100%; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="airplane-icon.svg" alt="Airplane" width="50" class="d-inline">
+    <h1 class="d-inline">Flight Information</h1>
+    <div class="clock-container">
+      <div class="clock">
+        <span id="clock-time" class="time">00:00</span><br>
+        <span id="clock-date" class="date">2024-01-01</span>
+      </div>
+      <button onclick="addInfo()" class="btn btn-primary add-info-btn">+ Add Info</button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="table table-hover flight-table text-light">
+      <thead>
+        <tr>
+          <th>FLIGHT DATE</th>
+          <th>FLIGHT</th>
+          <th>DESTINATION</th>
+          <th>SCHED DEP</th>
+          <th>SCHED ARR</th>
+          <th>BOARDING TIME</th>
+          <th>GATE NO</th>
+          <th>STATUS</th>
+          <th>ACTION</th> 
+        </tr>
+      </thead>
+      <tbody id="flight-table-body">
+       
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const flightData = [
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'CHECK IN', statusClass: 'status-checkin' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE OPEN', statusClass: 'status-gateopen' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE CLOSED', statusClass: 'status-gateclosed' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'FINAL CALL', statusClass: 'status-finalcall' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'CHECK IN', statusClass: 'status-checkin' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE OPEN', statusClass: 'status-gateopen' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE CLOSED', statusClass: 'status-gateclosed' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'FINAL CALL', statusClass: 'status-finalcall' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'CHECK IN', statusClass: 'status-checkin' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE OPEN', statusClass: 'status-gateopen' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'GATE CLOSED', statusClass: 'status-gateclosed' },
+      { date: '01-01-2024', flight: 'UL225', destination: 'CMB-DOH', dep: '00:00', arr: '00:00', boarding: '00:00', gate: 'GATE 01', status: 'FINAL CALL', statusClass: 'status-finalcall' }
+    ];
+
+    function populateTable() {
+      const tableBody = document.getElementById('flight-table-body');
+      flightData.forEach(flight => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${flight.date}</td>
+          <td>${flight.flight}</td>
+          <td>${flight.destination}</td>
+          <td>${flight.dep}</td>
+          <td>${flight.arr}</td>
+          <td>${flight.boarding}</td>
+          <td>${flight.gate}</td>
+          <td class="${flight.statusClass}">${flight.status}</td>
+          <td>
+            <button class="action-btn edit" onclick="editInfo(this)">
+              <img src="edit-icon.svg" alt="Edit">
+            </button>
+            <button class="action-btn delete" onclick="deleteInfo(this)">
+              <img src="delete-icon.svg" alt="Delete">
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function updateClock() {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0'); 
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const year = now.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+  document.getElementById('clock-date').textContent = formattedDate;
+  const time = now.toTimeString().substr(0, 5);
+  document.getElementById('clock-time').textContent = time;
+}
+
+    function addInfo() {
+      alert('Add Info button clicked');
+      //  add new row
+    }
+
+    function editInfo(row) {
+      const rowData = row.closest('tr').children; 
+      alert(`Editing row with flight: ${rowData[1].textContent}`);
+      // edit the row
+    }
+
+    function deleteInfo(row) {
+      const table = document.querySelector('.flight-table tbody');
+      const selectedRow = row.closest('tr');
+      alert(`Deleting row with flight: ${selectedRow.children[1].textContent}`);
+      table.removeChild(selectedRow);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    populateTable(); 
+  </script>
+</body>
+</html>
